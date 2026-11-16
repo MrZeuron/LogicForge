@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Интерактивный симулятор логических элементов И, ИЛИ, XOR и НЕ.">
+  <title>Вентили — LogicForest</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="logic.js" defer></script>
+  <script src="js/gate-simulator.js" defer></script>
+</head>
+<body>
+  <header class="site-header"><div class="container header-inner">
+    <a class="brand" href="index.html" aria-label="LogicForest — конструктор"><span class="brand-mark">LF</span><span class="brand-name">LogicForest</span></a>
+    <nav class="nav" aria-label="Основная навигация"><a href="index.html">Конструктор</a><a href="theory.html">Теория</a></nav>
+  </div></header>
+
+  <main class="container page-main">
+    <div class="page-intro"><p class="eyebrow">Изучайте основы</p><h1>Логические вентили</h1><p>Выберите элемент и меняйте входные сигналы. Выход, формула и таблица истинности обновятся сразу.</p></div>
+    <div class="sim-layout">
+      <section class="panel" aria-labelledby="sim-title">
+        <h2 id="sim-title">Логический элемент</h2>
+        <p class="field-label">Операция</p>
+        <div class="operation-list" role="group" aria-label="Выбор логической операции">
+          <button class="operation-button selected" type="button" data-operation="AND" aria-pressed="true">И <small>AND</small></button>
+          <button class="operation-button" type="button" data-operation="OR" aria-pressed="false">ИЛИ <small>OR</small></button>
+          <button class="operation-button" type="button" data-operation="XOR" aria-pressed="false">XOR <small>исключающее ИЛИ</small></button>
+          <button class="operation-button" type="button" data-operation="NOT" aria-pressed="false">НЕ <small>NOT A</small></button>
+        </div>
+        <div class="signal-grid">
+          <div class="signal-control"><span class="field-label">Вход A</span><button id="input-a" class="bit-button" type="button" aria-label="Вход A: 0. Нажмите, чтобы переключить" aria-pressed="false">0</button></div>
+          <div class="signal-control" id="input-b-control"><span class="field-label">Вход B</span><button id="input-b" class="bit-button" type="button" aria-label="Вход B: 0. Нажмите, чтобы переключить" aria-pressed="false">0</button></div>
+          <div class="signal-control output-control"><span class="field-label">Выход Y</span><output id="output" class="bit-output" aria-live="polite">0</output></div>
+        </div>
+        <p id="expression" class="expression">A ∧ B = 0</p>
+        <p id="operation-note" class="muted">И выдаёт 1, только когда оба входа равны 1.</p>
+      </section>
+      <section class="panel" aria-labelledby="table-title">
+        <h2 id="table-title">Таблица истинности</h2>
+        <p class="muted">Выделена строка для текущих входов.</p>
+        <div class="table-wrap"><table class="truth-table"><thead id="truth-head"></thead><tbody id="truth-body"></tbody></table></div>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer"><div class="container">LogicForest · Лаборатория цифровой логики</div></footer>
+</body>
+</html>

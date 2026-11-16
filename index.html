@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="LogicForest — интерактивный конструктор цифровых логических схем.">
+  <title>LogicForest — Конструктор схем</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/simulator.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="LogicForest — конструктор"><span class="brand-mark">LF</span><span class="brand-name">LogicForest</span></a>
+      <nav class="nav" aria-label="Основная навигация">
+        <a class="active" aria-current="page" href="index.html">Конструктор</a>
+        <a href="theory.html">Теория</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="sim-page">
+    <div class="sim-heading">
+      <div><p class="eyebrow">Цифровая лаборатория / 01</p><h1>Конструктор схем<span class="heading-dot">.</span></h1><p>От первого сигнала до работающей логики.</p></div>
+      <div class="sim-actions">
+        <button id="demo-btn" class="primary-action" type="button">Пример схемы</button>
+        <button id="save-btn" type="button">Сохранить JSON</button>
+        <button id="load-btn" type="button">Загрузить JSON</button>
+        <button id="clear-btn" class="danger" type="button">Очистить поле</button>
+        <input id="file-input" type="file" accept="application/json,.json" hidden>
+      </div>
+    </div>
+
+    <section class="sim-shell" aria-label="Редактор цифровых схем">
+      <aside class="sim-side left" aria-label="Библиотека элементов">
+        <div class="library-heading"><h2>Элементы</h2><span>16</span></div>
+        <label class="search-label"><span class="sr-only">Поиск элементов</span><input id="element-search" type="search" placeholder="Найти элемент…" autocomplete="off"></label>
+        <div class="side-group"><h2 class="side-title">Входы и выходы</h2>
+          <div class="tool-list">
+            <button class="tool" data-type="IN">Вход</button><button class="tool" data-type="OUT">Выход</button>
+            <button class="tool" data-type="CLOCK">Такт</button><button class="tool" data-type="LED">Индикатор</button>
+          </div>
+        </div>
+        <div class="side-group"><h2 class="side-title">Логические элементы</h2>
+          <div class="tool-list">
+            <button class="tool" data-type="AND">AND</button><button class="tool" data-type="OR">OR</button>
+            <button class="tool" data-type="NOT">NOT</button><button class="tool" data-type="XOR">XOR</button>
+            <button class="tool" data-type="NAND">NAND</button><button class="tool" data-type="NOR">NOR</button>
+            <button class="tool" data-type="XNOR">XNOR</button><button class="tool" data-type="BUF">BUF</button>
+          </div>
+        </div>
+        <div class="side-group"><h2 class="side-title">Сложные элементы</h2>
+          <div class="tool-list">
+            <button class="tool wide" data-type="MUX">MUX 2:1</button>
+            <button class="tool wide" data-type="HA">Полусумматор</button>
+            <button class="tool wide" data-type="FA">Полный сумматор</button>
+            <button class="tool wide" data-type="DFF">D-триггер ↑</button>
+          </div>
+        </div>
+      </aside>
+
+      <div class="workspace">
+        <div class="canvas-toolbar" role="toolbar" aria-label="Инструменты поля">
+          <div class="toolbar-group"><button id="select-tool" class="active" type="button" title="Выделение (V)" aria-label="Выделение" aria-pressed="true">↖</button><button id="pan-tool" type="button" title="Перемещение поля (H или пробел)" aria-label="Перемещение поля" aria-pressed="false">✥</button><span class="toolbar-divider"></span><button id="undo-btn" type="button" title="Отменить (Ctrl+Z)" aria-label="Отменить">↶</button><button id="redo-btn" type="button" title="Повторить (Ctrl+Shift+Z)" aria-label="Повторить">↷</button></div>
+          <span class="canvas-label">РАБОЧЕЕ ПОЛЕ</span>
+          <div class="toolbar-group"><button id="zoom-out" type="button" aria-label="Уменьшить масштаб">−</button><button id="zoom-reset" type="button" title="Масштаб 100%">100%</button><button id="zoom-in" type="button" aria-label="Увеличить масштаб">+</button><span class="toolbar-divider"></span><button id="fit-btn" type="button" title="Показать всю схему (F)" aria-label="Показать всю схему">⛶</button></div>
+        </div>
+        <div class="canvas-viewport" id="viewport" tabindex="0" aria-label="Рабочая область схемы">
+        <div class="canvas-stage" id="stage">
+          <svg class="wires" id="wires" aria-label="Соединения элементов"></svg>
+          <div id="nodes"></div>
+        </div>
+        </div>
+        <div class="canvas-bottom"><span><span class="signal-dot"></span>Симуляция активна</span><span>Пробел + движение — обзор · Ctrl + колесо — масштаб</span></div>
+      </div>
+
+      <aside class="sim-side right" aria-label="Информация и управление">
+        <div><h2 class="side-title">Подсказка</h2>
+          <p class="sim-help">Добавьте элемент из библиотеки нажатием или перетащите на поле. Перемещайте его за корпус или подпись.</p><p class="sim-help">Для соединения нажмите на выход, затем на вход. Нажатие на <strong>0 / 1</strong> меняет сигнал.</p><p class="sim-help">Протяните рамку для группового выделения. <strong>Shift</strong> добавляет элементы. Перемещайте группу вместе.</p>
+          <p class="sim-help"><strong>Ctrl+A</strong> — выделить всё. <strong>Ctrl+D</strong> — дублировать. <strong>Delete</strong> — удалить. <strong>Esc</strong> — снять выделение.</p>
+          <details class="notation-note"><summary>Обозначения ГОСТ</summary><p class="sim-help">Базовые УГО по ГОСТ 2.743-91: &amp; — И, ≥1 — ИЛИ, =1 — исключающее ИЛИ, 1 — повторитель. Кружок на выходе означает инверсию. MS — мультиплексор, SM — сумматор, T — триггер. Входы и индикаторы — органы управления симулятором.</p></details>
+        </div>
+        <div><h2 class="side-title">Состояние</h2>
+          <p class="status" id="status" aria-live="polite">Готово. Добавьте элемент или откройте пример.</p>
+          <div class="stat-item"><span>Элементы</span><strong id="node-count">0</strong></div>
+          <div class="stat-item"><span>Соединения</span><strong id="wire-count">0</strong></div>
+        </div>
+        <div><h2 class="side-title">Выделено</h2><div class="selected-info" id="selected-info">Ничего не выбрано.</div></div>
+      </aside>
+    </section>
+  </main>
+
+  <p class="note">LogicForest — интерактивная лаборатория цифровой логики: от базовых вентилей до сумматоров и триггеров.</p>
+  <footer class="site-footer"><div class="container">LogicForest · Лаборатория цифровой логики</div></footer>
+</body>
+</html>

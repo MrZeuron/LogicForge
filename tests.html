@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Тест из восьми вопросов по основам цифровой логики.">
+  <title>Тесты — LogicForest</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/tests.js" defer></script>
+</head>
+<body>
+  <header class="site-header"><div class="container header-inner">
+    <a class="brand" href="index.html" aria-label="LogicForest — конструктор"><span class="brand-mark">LF</span><span class="brand-name">LogicForest</span></a>
+    <nav class="nav" aria-label="Основная навигация"><a href="index.html">Конструктор</a><a href="theory.html">Теория</a></nav>
+  </div></header>
+
+  <main class="container page-main narrow">
+    <div class="page-intro"><p class="eyebrow">Самопроверка</p><h1>Тест по цифровой логике</h1><p>Ответьте на 8 вопросов. В каждом выберите один вариант; после завершения увидите результат.</p></div>
+    <form id="quiz-form" novalidate>
+      <div id="questions"></div>
+      <p id="quiz-message" class="form-message" role="alert" hidden></p>
+      <button class="button button-primary" type="submit">Завершить тест</button>
+    </form>
+    <section id="quiz-result" class="panel result-panel" aria-live="polite" hidden>
+      <p class="eyebrow">Результат</p><h2 id="result-score"></h2><p id="result-message"></p>
+      <button id="retry-button" class="button button-primary" type="button">Пройти ещё раз</button>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="container">LogicForest · Лаборатория цифровой логики</div></footer>
+</body>
+</html>
